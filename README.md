@@ -1,14 +1,14 @@
 # Python-Multi-Player-Game
 
 ### **Dependencies**
-* Python
+* [ ] Python
   - Download [here](https://www.python.org/downloads/)
-* Pip
+* [ ] Pip
   - Install pip [here](https://pip.pypa.io/en/stable/installing/)
   - ```curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py```
-* Pycharm
+* [ ] Pycharm
   - Install pycharm [here](https://www.jetbrains.com/pycharm/)
-* Pygame
+* [ ] Pygame
   - Install from terminal/command line using pip ```pip install pygame```
 
 ## Setup
