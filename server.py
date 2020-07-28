@@ -21,7 +21,7 @@ print("Waiting for a connection, Server Started")
 
 # conn = connection
 def threaded_client(conn):
-
+    conn.send(str.encode("Connected"))
     reply = ""
     # Continue running while client is still connected
     while True:
