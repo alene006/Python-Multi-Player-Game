@@ -2,6 +2,7 @@ import pygame
 
 import pickle
 from network import Network
+
 pygame.font.init()
 
 width = 700
