@@ -1,7 +1,7 @@
 import socket
 from _thread import *
 import pickle
-from .game import Game
+from game import Game
 
 
 server = "192.168.1.3"
@@ -26,8 +26,57 @@ games = {}
 idCount = 0
 
 # conn = connection
+# p = player [0,1]
 def threaded_client(conn, p, gameId):
-    pass
+    """
+    :param conn: Network
+    :param p: [0,1]
+    :param gameId: int
+    :return:
+    """
+
+    """
+    Have global idCount to account for players leaving/disconnecting.
+    We'll subtract from idCount to keep track of the current num of players
+    """
+    global idCount
+    conn.send(str.encode(str(p)))
+
+    reply = ""
+    while True:
+        """
+        Increase number from 2048 and doubl to 4096 to account for 
+        ossibility of information overflow
+        """
+        try:
+            data = conn.recv(4096).decode()
+
+            if gameId in games:
+                game = games[gameId]
+
+                if not data:
+                    break
+                else:
+                    if data == "reset":
+                        game.resetWent()
+                    elif data != "get":
+                        game.play(p, data)
+
+                    reply = game
+                    conn.sendall(pickle.dumps(reply))
+            else:
+                break
+        except:
+            break
+
+    print("Lost connection")
+    try:
+        del games[gameId]
+        print("Closing Game", gameId)
+    except:
+        pass
+    idCount -= 1
+    conn.close()
 
 # Continuously looking for connections
 while True:
@@ -48,5 +97,4 @@ while True:
         games[gameId].ready = True
         p = 1
 
-
-    start_new_thread(threaded_client, (conn))
+    start_new_thread(threaded_client, (conn, p, gameId))
